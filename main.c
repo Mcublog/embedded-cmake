@@ -15,9 +15,9 @@
 #include <unistd.h>
 
 #include "FreeRTOS.h"
-#include "task.h"
 #include "queue.h"
 #include "semphr.h"
+#include "task.h"
 
 #include "FreeRTOSConfig.h"
 
@@ -33,11 +33,28 @@
 #include "log_libs.h"
 //<<----------------------
 
+//>>---------------------- Local defines
 /* Priorities at which the tasks are created. */
 #define mainQUEUE_SEND_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
+//<<----------------------
 
+//>>---------------------- Static declaration
 static void DummyTask(void *pvParameters);
+//<<----------------------
 
+//>>---------------------- Local definitions
+static void DummyTask(void *pvParameters)
+{
+    const char *name = (const char *)pvParameters;
+    for (;;)
+    {
+        LOG_INFO("Hello from %s", name);
+        vTaskDelay(1000);
+    }
+}
+//<<----------------------
+
+//>>---------------------- Global
 int main(void)
 {
     LOG_INFO("Hello");
@@ -52,13 +69,4 @@ int main(void)
         LOG_ERROR("Critacal error");
     }
 }
-
-static void DummyTask(void *pvParameters)
-{
-    const char *name = (const char*)pvParameters;
-    for (;;)
-    {
-        LOG_INFO("Hello from %s", name);
-        vTaskDelay(1000);
-    }
-}
+//<<----------------------
