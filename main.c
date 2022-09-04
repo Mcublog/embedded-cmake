@@ -20,7 +20,6 @@
 #include "task.h"
 
 #include "FreeRTOSConfig.h"
-
 #include "app/utils/app_utils.h"
 
 //>>---------------------- Log control
