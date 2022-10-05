@@ -1,5 +1,5 @@
 {
-    "C_Cpp.errorSquiggles": "Disabled",
+    "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
         "log_libs.h": "c",
         "array": "cpp",
@@ -13,6 +13,6 @@
     "doxdocgen.file.copyrightTag": [
         "@copyright Mcublog Copyright (c) {year}"
     ],
-    "C_Cpp.clang_format_fallbackStyle": "{BasedOnStyle: Microsoft, ColumnLimit: 90, IndentWidth: 4, ColumnLimit: 0}",
+    "C_Cpp.clang_format_fallbackStyle": "{BasedOnStyle: Microsoft, ColumnLimit: 90, IndentWidth: 4}",
     "diffEditor.ignoreTrimWhitespace": false,
 }

@@ -13,16 +13,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 
-#include "FreeRTOS.h"
-#include "queue.h"
-#include "semphr.h"
-#include "task.h"
+#include <FreeRTOS.h>
+#include <queue.h>
+#include <semphr.h>
+#include <task.h>
 
 #include "FreeRTOSConfig.h"
-#include "app/utils/app_utils.h"
-
 #include "application.h"
+#include "utils/app_utils.h"
 #include "version.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME app
@@ -45,9 +45,13 @@ static void DummyTask(void *pvParameters);
 static void DummyTask(void *pvParameters)
 {
     const char *name = (const char *)pvParameters;
+    static const int MAX_BUFFER_SIZE = 32;
+    char buff[MAX_BUFFER_SIZE];
     for (;;)
     {
-        LOG_INFO("Hello from %s", name);
+        time_t t = time(NULL);
+        strftime(buff, MAX_BUFFER_SIZE, "%T", localtime(&t));
+        LOG_INFO("%s: hello from %s", buff, name);
         vTaskDelay(1000);
     }
 }
