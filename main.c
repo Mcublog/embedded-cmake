@@ -11,6 +11,8 @@
 
 #include "FreeRTOSConfig.h"
 
+#define VERSION "0.0.1"
+
 /* Priorities at which the tasks are created. */
 #define mainQUEUE_RECEIVE_TASK_PRIORITY (tskIDLE_PRIORITY + 2)
 #define mainQUEUE_SEND_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
@@ -62,7 +64,7 @@ static void DummyTask(void *pvParameters);
 
 int main(void)
 {
-    printf("Hello\r\n");
+    printf("Dummy test v%s\r\n", VERSION);
     console_init();
     xTaskCreate(DummyTask, "DummyTask", configMINIMAL_STACK_SIZE, NULL,
                 mainQUEUE_SEND_TASK_PRIORITY, NULL);
