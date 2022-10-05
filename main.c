@@ -33,6 +33,8 @@
 //<<----------------------
 
 //>>---------------------- Local defines
+#define VERSION "0.0.1"
+
 /* Priorities at which the tasks are created. */
 #define mainQUEUE_SEND_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
 //<<----------------------
@@ -56,11 +58,10 @@ static void DummyTask(void *pvParameters)
 //>>---------------------- Global
 int main(void)
 {
-    LOG_INFO("Hello");
-
-    static char *name = "DummyTask0";
-
-    xTaskCreate(DummyTask, name, configMINIMAL_STACK_SIZE, name,
+    printf("Dummy test v%s\r\n", VERSION);
+    xTaskCreate(DummyTask, "DummyTask", configMINIMAL_STACK_SIZE, (void*)"DummyTask0",
+                mainQUEUE_SEND_TASK_PRIORITY, NULL);
+    xTaskCreate(DummyTask, "DummyTask", configMINIMAL_STACK_SIZE, (void*)"DummyTask1",
                 mainQUEUE_SEND_TASK_PRIORITY, NULL);
     vTaskStartScheduler();
     for (;;)
