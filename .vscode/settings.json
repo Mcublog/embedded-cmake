@@ -4,7 +4,8 @@
         "log_libs.h": "c",
         "array": "cpp",
         "string_view": "cpp",
-        "config.h": "c"
+        "config.h": "c",
+        "app_utils.h": "c"
     },
     // Set the e-mail address of the author.  Replaces {email}.
     "doxdocgen.generic.authorEmail": "viacheslav@mcublog.ru",

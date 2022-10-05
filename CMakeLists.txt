@@ -15,22 +15,37 @@ endif()
 add_definitions(-DprojCOVERAGE_TEST=0)
 add_definitions(-D_WINDOWS_)
 
+
 set(FREERTOS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs/FreeRTOS")
 set(APP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/app")
 set(DEBUG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/app/debug")
+set(BUTTON_DIR "${APP_DIR}/button")
+set(IOMOCK_DIR "${APP_DIR}/io_mock")
+set(MOCKS_DIR "${APP_DIR}/mocks")
+set(UTILS_DIR "${APP_DIR}/utils")
+set(LIBS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs")
 
 # Add includes dir
 include_directories(
     .
     ${FREERTOS_DIR}/include
-    ${PORT_DIR}/GCC/Posix
-    ${PORT_DIR}/GCC/Posix/utils
     ${APP_DIR}
     ${DEBUG_DIR}
+    ${UTILS_DIR}
+    ${IOMOCK_DIR}
 )
 
 # Added app files
 FILE(GLOB APP_SOURCES ${APP_DIR}/*.c)
+
+# Added io_mock
+FILE(GLOB IOMOCK_SOURCES ${IOMOCK_DIR}/*.c)
+
+# Added mocks
+FILE(GLOB MOCKS_SOURCES ${MOCKS_DIR}/*.c)
+
+# Added sources for SoftwareTimer lib
+FILE(GLOB SOFTWARETIMER_SOURCES ${LIBS_DIR}/SoftwareTimer/*.c)
 
 # Add all sources
 set(SOURCES
@@ -38,6 +53,8 @@ set(SOURCES
     ${APP_SOURCES}
     ${APP_DIR}/utils/app_utils.c
     ${DEBUG_DIR}/log_libs.c
+    ${IOMOCK_SOURCES}
+    ${MOCKS_SOURCES}
 )
 
 # Find FreeRTOS lib
@@ -48,6 +65,10 @@ link_directories(${FREERTOS_DIR}/lib)
 add_executable(embedded_cmake
     ${SOURCES}
 )
+
+# Add SoftwareTimer lib
+add_library(stimer STATIC ${SOFTWARETIMER_SOURCES})
+target_link_libraries(${PROJECT_NAME} stimer)
 
 # Add FREERTOS
 target_link_libraries(embedded_cmake freertos)
