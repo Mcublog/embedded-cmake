@@ -16,7 +16,6 @@ add_definitions(-DprojCOVERAGE_TEST=0)
 add_definitions(-D_WINDOWS_)
 
 set(FREERTOS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs/FreeRTOS")
-set(PORT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs/FreeRTOS/port")
 set(APP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/app")
 set(DEBUG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/app/debug")
 
@@ -30,12 +29,16 @@ include_directories(
     ${DEBUG_DIR}
 )
 
+# Added app files
+FILE(GLOB APP_SOURCES ${APP_DIR}/*.c)
+
+# Add all sources
 set(SOURCES
     main.c
+    ${APP_SOURCES}
     ${APP_DIR}/utils/app_utils.c
     ${DEBUG_DIR}/log_libs.c
 )
-
 
 # Find FreeRTOS lib
 include_directories(${FREERTOS_DIR}/include)
@@ -46,9 +49,10 @@ add_executable(embedded_cmake
     ${SOURCES}
 )
 
+# Add FREERTOS
 target_link_libraries(embedded_cmake freertos)
 
-## Add pthread
+# Add pthread
 target_link_libraries(${PROJECT_NAME} pthread)
 
 set_property(TARGET embedded_cmake PROPERTY CXX_STANDARD 20)
