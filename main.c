@@ -25,7 +25,7 @@
 //>>---------------------- Log control
 #define LOG_MODULE_NAME main
 #if defined(NDEBUG)
-#define LOG_MODULE_LEVEL (3)
+#define LOG_MODULE_LEVEL (0)
 #else
 #define LOG_MODULE_LEVEL (3)
 #endif
@@ -33,7 +33,7 @@
 //<<----------------------
 
 //>>---------------------- Local defines
-#define VERSION "0.0.1"
+#define VERSION "0.1.0"
 
 /* Priorities at which the tasks are created. */
 #define mainQUEUE_SEND_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
