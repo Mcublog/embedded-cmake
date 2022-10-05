@@ -1,0 +1,18 @@
+{
+    "C_Cpp.errorSquiggles": "Disabled",
+    "files.associations": {
+        "log_libs.h": "c",
+        "array": "cpp",
+        "string_view": "cpp",
+        "config.h": "c"
+    },
+    // Set the e-mail address of the author.  Replaces {email}.
+    "doxdocgen.generic.authorEmail": "viacheslav@mcublog.ru",
+    // Set the name of the author.  Replaces {author}.
+    "doxdocgen.generic.authorName": "Viacheslav",
+    "doxdocgen.file.copyrightTag": [
+        "@copyright Mcublog Copyright (c) {year}"
+    ],
+    "C_Cpp.clang_format_fallbackStyle": "{BasedOnStyle: Microsoft, ColumnLimit: 90, IndentWidth: 4, ColumnLimit: 0}",
+    "diffEditor.ignoreTrimWhitespace": false,
+}
