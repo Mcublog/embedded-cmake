@@ -94,7 +94,8 @@ void iomock_write_bool(const char *filename, bool value)
 void *iomock_edge_detecting(void *vargp)
 {
     iomock_handlers_t *mock_handlers = (iomock_handlers_t *)(vargp);
-    bool old_state, new_state = mock_handlers->state_reading();
+    bool old_state, new_state;
+    old_state = new_state = mock_handlers->state_reading();
     while (1)
     {
         if (mock_handlers == NULL)

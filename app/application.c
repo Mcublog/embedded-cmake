@@ -25,7 +25,7 @@
 #if defined(NDEBUG)
 #define LOG_MODULE_LEVEL (0)
 #else
-#define LOG_MODULE_LEVEL (3)
+#define LOG_MODULE_LEVEL (4)
 #endif
 #include "log_libs.h"
 //<<----------------------
