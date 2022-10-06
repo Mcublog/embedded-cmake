@@ -8,13 +8,6 @@
  * @copyright Mcublog Copyright (c) 2022
  *
  */
-#include <pthread.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <time.h>
-
 #include <FreeRTOS.h>
 #include <queue.h>
 #include <semphr.h>
@@ -23,9 +16,9 @@
 #include "FreeRTOSConfig.h"
 #include "application.h"
 #include "button/button.h"
+#include "libs/SoftwareTimer/SoftTimers.h"
 #include "utils/app_utils.h"
 #include "utils/timer.h"
-#include "libs/SoftwareTimer/SoftTimers.h"
 #include "version.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME app

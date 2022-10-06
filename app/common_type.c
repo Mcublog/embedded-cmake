@@ -38,23 +38,6 @@ const char *cm_irq_edge_stringify(app_t_irq_edge_t edge)
 /**
  * @brief
  *
- * @param state
- * @return const *char
- */
-const char *cm_stringify_app_state(app_state_t state)
-{
-    if (state == APP_IDLE)
-        return "APP_IDLE";
-    else if (state == APP_LOW_LEVEL_CHEKING)
-        return "APP_LOW_LEVEL_CHEKING";
-    else if (state == APP_HEATER_WORKING)
-        return "APP_HEATER_WORKING";
-    return "";
-}
-
-/**
- * @brief
- *
  * @param value
  * @return const char*
  */

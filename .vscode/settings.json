@@ -16,4 +16,5 @@
     ],
     "C_Cpp.clang_format_fallbackStyle": "{BasedOnStyle: Microsoft, ColumnLimit: 90, IndentWidth: 4}",
     "diffEditor.ignoreTrimWhitespace": false,
+    "C_Cpp.default.configurationProvider": "go2sh.cmake-integration",
 }
