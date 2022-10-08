@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(embedded_cmake VERSION 0.1.0)
+project(embedded_cmake VERSION 0.2.0)
 
 # Added color compiler output
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
