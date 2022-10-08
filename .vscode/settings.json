@@ -5,7 +5,9 @@
         "array": "cpp",
         "string_view": "cpp",
         "config.h": "c",
-        "app_utils.h": "c"
+        "app_utils.h": "c",
+        "task.h": "c",
+        "freertos.h": "c"
     },
     // Set the e-mail address of the author.  Replaces {email}.
     "doxdocgen.generic.authorEmail": "viacheslav@mcublog.ru",
