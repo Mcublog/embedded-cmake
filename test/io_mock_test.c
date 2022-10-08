@@ -17,9 +17,15 @@ bool gpio_irq_handler(app_t_irq_edge_t edge)
     LOG_INFO("edge");
 }
 
-int main() {
+int main()
+{
     button_init(&gpio_irq_handler);
     button_led_on(true);
-    assert(button_led_is_on() == true);
+    bool led_state = button_led_is_on();
+    if (led_state == false)
+    {
+        LOG_ERROR("led state is not true");
+        exit(1);
+    }
     return 0;
 }
