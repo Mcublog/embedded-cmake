@@ -30,4 +30,4 @@ echo 1 > button && sleep 0.5 && echo 0 > button
 ## Links
 
 * [FreeRtosLib](https://github.com/Mcublog/FreeRTOS-CMake)
-* [SoftwareTimer](https://github.com/maurillo71/SoftwareTimer)
+* [SoftwareTimer](https://github.com/Mcublog/SoftwareTimer)

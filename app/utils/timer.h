@@ -3,9 +3,6 @@
 
 typedef void (*timer_systick_callback_t)(void);
 
-#define DIS_TIMER_INT_RX timer_irq_enable()
-#define EN_TIMER_INT_RX timer_irq_enable()
-
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -8,18 +8,19 @@
  * @copyright Mcublog Copyright (c) 2022
  *
  */
+#include "FreeRTOSConfig.h"
 #include <FreeRTOS.h>
 #include <queue.h>
 #include <semphr.h>
 #include <task.h>
 
-#include "FreeRTOSConfig.h"
 #include "application.h"
 #include "button/button.h"
-#include "libs/SoftwareTimer/SoftTimers.h"
+#include "SoftTimers.h"
 #include "utils/app_utils.h"
 #include "utils/timer.h"
 #include "version.h"
+#include "timer.h"
 //>>---------------------- Log control
 #define LOG_MODULE_NAME app
 #if defined(NDEBUG)
@@ -108,7 +109,12 @@ void application(void)
 {
     printf("Dummy test v%s\r\n", VERSION);
 
-    Timer_Init();
+    stimer_init_ctx_t stimer_ctx = {
+        .disable_irq = &timer_irq_disable,
+        .enable_irq = &timer_irq_enable
+    };
+
+    Timer_Init(&stimer_ctx);
     timer_init((timer_systick_callback_t)&_sys_tick_handler);
 
     button_init((app_t_gpio_irq_handler_t)&_btn_irq_handler);

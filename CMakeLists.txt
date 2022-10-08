@@ -16,64 +16,44 @@ add_definitions(-DprojCOVERAGE_TEST=0)
 add_definitions(-D_WINDOWS_)
 
 
-set(FREERTOS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs/FreeRTOS")
-set(APP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/app")
-set(DEBUG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/app/debug")
-set(BUTTON_DIR "${APP_DIR}/button")
-set(IOMOCK_DIR "${APP_DIR}/io_mock")
-set(MOCKS_DIR "${APP_DIR}/mocks")
-set(UTILS_DIR "${APP_DIR}/utils")
 set(LIBS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs")
+set(FREERTOS_DIR "${LIBS_DIR}/FreeRTOS")
+set(SOFTWARE_TIMER_DIR "${LIBS_DIR}/SoftwareTimer")
+set(APP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/app")
+set(DEBUG_DIR "${APP_DIR}/debug")
 
 # Add includes dir
 include_directories(
     .
-    ${FREERTOS_DIR}/include
-    ${APP_DIR}
     ${DEBUG_DIR}
-    ${UTILS_DIR}
-    ${IOMOCK_DIR}
+    ${FREERTOS_DIR}/include
+    ${SOFTWARE_TIMER_DIR}/include
 )
-
-# Added app files
-FILE(GLOB APP_SOURCES ${APP_DIR}/*.c)
-
-# Added io_mock
-FILE(GLOB IOMOCK_SOURCES ${IOMOCK_DIR}/*.c)
-
-# Added mocks
-FILE(GLOB MOCKS_SOURCES ${MOCKS_DIR}/*.c)
-
-# Added sources for SoftwareTimer lib
-FILE(GLOB SOFTWARETIMER_SOURCES ${LIBS_DIR}/SoftwareTimer/*.c)
 
 # Add all sources
 set(SOURCES
     main.c
-    ${APP_SOURCES}
     ${APP_DIR}/utils/app_utils.c
-    ${DEBUG_DIR}/log_libs.c
-    ${IOMOCK_SOURCES}
-    ${MOCKS_SOURCES}
 )
+
+# Adde
+FILE(GLOB SOURCES ${SOURCES})
+include_directories(app)
+
+# Add sub directories
+add_subdirectory(app)
 
 # Find FreeRTOS lib
-include_directories(${FREERTOS_DIR}/include)
-link_directories(${FREERTOS_DIR}/lib)
-
+link_directories(${FREERTOS_DIR})
+# Find SoftwareTimer lib
+link_directories(${SOFTWARE_TIMER_DIR})
 # Create executable
-add_executable(embedded_cmake
-    ${SOURCES}
-)
+add_executable(${PROJECT_NAME} ${SOURCES})
 
-# Add SoftwareTimer lib
-add_library(stimer STATIC ${SOFTWARETIMER_SOURCES})
+# Added libs
+target_link_libraries(${PROJECT_NAME} app)
 target_link_libraries(${PROJECT_NAME} stimer)
-
-# Add FREERTOS
-target_link_libraries(embedded_cmake freertos)
-
-# Add pthread
+target_link_libraries(${PROJECT_NAME} freertos)
 target_link_libraries(${PROJECT_NAME} pthread)
 
 set_property(TARGET embedded_cmake PROPERTY CXX_STANDARD 20)
