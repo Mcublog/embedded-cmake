@@ -1,10 +1,13 @@
 {
-    "C_Cpp.errorSquiggles": "Disabled",
+    "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
         "log_libs.h": "c",
         "array": "cpp",
         "string_view": "cpp",
-        "config.h": "c"
+        "config.h": "c",
+        "app_utils.h": "c",
+        "task.h": "c",
+        "freertos.h": "c"
     },
     // Set the e-mail address of the author.  Replaces {email}.
     "doxdocgen.generic.authorEmail": "viacheslav@mcublog.ru",
@@ -13,6 +16,7 @@
     "doxdocgen.file.copyrightTag": [
         "@copyright Mcublog Copyright (c) {year}"
     ],
-    "C_Cpp.clang_format_fallbackStyle": "{BasedOnStyle: Microsoft, ColumnLimit: 90, IndentWidth: 4, ColumnLimit: 0}",
+    "C_Cpp.clang_format_fallbackStyle": "{BasedOnStyle: Microsoft, ColumnLimit: 90, IndentWidth: 4}",
     "diffEditor.ignoreTrimWhitespace": false,
+    "C_Cpp.default.configurationProvider": "go2sh.cmake-integration",
 }
