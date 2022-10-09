@@ -18,7 +18,7 @@ The Programm can work on a desktop PC with mocking HW. All GPIO is files.
 
 ```bash
 # button pressed
-echo 1 > button && sleep 0.5 && echo 0 > button
+echo 1 > /tmp/button && sleep 0.5 && echo 0 > /tmp/button
 ```
 
 *Requirements*:
