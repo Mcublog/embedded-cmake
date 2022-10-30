@@ -38,6 +38,8 @@
 #define BUTTON_DEBOUNCE_TIME_MS (5)
 #define BUTTON_MAX_LEVEL_CHECK_NUMBER (5)
 
+#define DUMMY_TASK_MAX_NUMBER (2)
+
 typedef struct
 {
     uint8_t checking_cnt;
@@ -48,7 +50,9 @@ static gpio_t _btn = {0};
 static void _btn_irq_handler(app_t_irq_edge_t edge);
 static void _btn_timeout_hander(uint8_t id);
 
+static TaskHandle_t DummyHandlers[DUMMY_TASK_MAX_NUMBER];
 static void DummyTask(void *pvParameters);
+void FrtosGetTaskInfo(TaskHandle_t task);
 //<<----------------------
 
 //>>---------------------- Local definitions
@@ -85,15 +89,15 @@ static void _sys_tick_handler(void)
  */
 static void DummyTask(void *pvParameters)
 {
-    const char *name = (const char *)pvParameters;
-    static const int MAX_BUFFER_SIZE = 32;
-    char buff[MAX_BUFFER_SIZE];
+    int number = (int)*((int *)pvParameters);
+    LOG_INFO("read: %d", number);
     for (;;)
     {
         // time_t t = time(NULL);
         // strftime(buff, MAX_BUFFER_SIZE, "%T", localtime(&t));
-        LOG_INFO("%s: %s pin state: %s", buff, name,
-                 cm_stringify_bool(button_get_state()));
+        FrtosGetTaskInfo(DummyHandlers[number]);
+        // LOG_INFO("%s: %s pin state: %s", buff, name,
+        //          cm_stringify_bool(button_get_state()));
         vTaskDelay(1000);
     }
 }
@@ -109,24 +113,38 @@ void application(void)
 {
     printf("Dummy test v%s\r\n", VERSION);
 
-    stimer_init_ctx_t stimer_ctx = {
-        .disable_irq = &timer_irq_disable,
-        .enable_irq = &timer_irq_enable
-    };
+    static int numbers[DUMMY_TASK_MAX_NUMBER] = {0};
+
+    stimer_init_ctx_t stimer_ctx = {.disable_irq = &timer_irq_disable,
+                                    .enable_irq = &timer_irq_enable};
 
     Timer_Init(&stimer_ctx);
     timer_init((timer_systick_callback_t)&_sys_tick_handler);
 
     button_init((app_t_gpio_irq_handler_t)&_btn_irq_handler);
 
-    xTaskCreate(DummyTask, "DummyTask", configMINIMAL_STACK_SIZE, (void *)"DummyTask0",
-                mainQUEUE_SEND_TASK_PRIORITY, NULL);
-    xTaskCreate(DummyTask, "DummyTask", configMINIMAL_STACK_SIZE, (void *)"DummyTask1",
-                mainQUEUE_SEND_TASK_PRIORITY, NULL);
+    for (int i = 0; i < DUMMY_TASK_MAX_NUMBER; i++)
+    {
+        numbers[i] = i;
+        xTaskCreate(DummyTask, "DummyTask", configMINIMAL_STACK_SIZE, (void *)&numbers[i],
+                    mainQUEUE_SEND_TASK_PRIORITY, &DummyHandlers[i]);
+    }
+
     vTaskStartScheduler();
     for (;;)
     {
         LOG_ERROR("Critacal error");
     }
+}
+
+void FrtosGetTaskInfo(TaskHandle_t task)
+{
+    if (!task)
+        return;
+    TaskStatus_t status;
+    eTaskState state = eInvalid;
+    vTaskGetInfo(task, &status, true, state);
+    LOG_INFO("%s #%d, stack: %d, prio: %d", status.pcTaskName, status.xTaskNumber,
+             status.usStackHighWaterMark, status.uxCurrentPriority);
 }
 //<<----------------------
