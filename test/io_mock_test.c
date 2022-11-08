@@ -14,7 +14,7 @@
 
 bool gpio_irq_handler(app_t_irq_edge_t edge)
 {
-    LOG_INFO("edge");
+    LOG_INFO("edge: %s", cm_irq_edge_stringify(edge));
 }
 
 int main()
